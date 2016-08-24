@@ -7,6 +7,7 @@ module Bank
 
     def initialize
       @name = name
+      @user_id = id
       @dob = birth_date
       @address = address
       @city = city
