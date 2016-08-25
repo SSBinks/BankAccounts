@@ -15,7 +15,7 @@ module Bank
         raise ArgumentError.new("Your initial balance cannot be less than zero")
       end
       @date_created = date
-      @current_balance = 0
+      @current_balance = @initial_balance
       @account_info = ""
     end
 
