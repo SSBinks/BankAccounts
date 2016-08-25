@@ -26,6 +26,11 @@ module Bank
         end
       end
 
+      def add_interest(rate)
+        interest_rate = @current_balance * (rate/100.0).to_f
+        @current_balance = @current_balance + interest_rate
+        return "Your updated balance is #{@current_balance} and You have earned #{interest_rate} in interest!"
+      end
 
     end
   end
