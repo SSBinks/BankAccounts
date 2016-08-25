@@ -32,9 +32,13 @@ module Bank
       return accounts
     end
 
-    def find(id)
-
-
+    def self.find(id)
+      id_find = self.all
+      id_find.each do |i|
+        if i.user_id == id
+          return i
+        end
+      end
     end
 
 
@@ -61,5 +65,4 @@ end
 
 
 Bank::Account.all
-#accounts.length
-#shari.withdraw
+Bank::Account.find(1212)
