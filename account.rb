@@ -8,9 +8,8 @@ module Bank
 
     def initialize(id, balance, date)
       @user_id = id
-      @initial_balance = balance
       if balance > 0
-        @initial_balance = balance
+        @initial_balance = (balance/100.0)
       else
         raise ArgumentError.new("Your initial balance cannot be less than zero")
       end
@@ -19,13 +18,14 @@ module Bank
       @account_info = ""
     end
 
+
     def self.all
       open_account = {}
       accounts = []
       CSV.open('/Users/ShariMeggs/Documents/ada/Wave-Projects/BankAccounts/BankAccounts/support/accounts.csv','r').each do |item|
         open_account[item[0]] = item[1..2]
         id = item[0].to_i
-        balance = (item[1].to_i/100)
+        balance = (item[1].to_f)
         date = item[2]
         accounts << self.new(id, balance, date)
       end
@@ -47,16 +47,16 @@ module Bank
     end
 
     def withdraw(balance)
-      @current_balance = @initial_balance - balance
-      if @current_balance < 0
+      if @current_balance - (balance/100.0) < 0
         puts "We are unable to process this request. Do not allow your account to go negative!"
-        return @initial_balance
+        return @current_balance
       end
+      @current_balance = @current_balance  - (balance/100.0)
       return @current_balance
     end
 
     def deposit(balance)
-      @current_balance = @initial_balance + balance
+      @current_balance = @initial_balance + (balance/100.0)
       return @current_balance
     end
 
