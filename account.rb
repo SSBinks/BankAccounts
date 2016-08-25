@@ -22,7 +22,7 @@ module Bank
     def self.all
       open_account = {}
       accounts = []
-      CSV.open('/Users/ShariMeggs/ada/Classwerk/BankAccounts/support/accounts.csv','r').each do |item|
+      CSV.open('/Users/ShariMeggs/Documents/ada/Wave-Projects/BankAccounts/BankAccounts/support/accounts.csv','r').each do |item|
         open_account[item[0]] = item[1..2]
         id = item[0].to_i
         balance = (item[1].to_i/100)
