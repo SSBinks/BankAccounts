@@ -4,7 +4,8 @@ module Bank
 
   class Account
 
-    attr_accessor :initial_balance, :user_id
+    attr_accessor :initial_balance
+    attr_reader :user_id,:date_created, :owner
     MIN = 0
 
     def initialize(id, balance, date)
@@ -15,9 +16,18 @@ module Bank
         raise ArgumentError.new("Your initial balance cannot be less than zero")
       end
       @date_created = date
-
-      @account_info = ""
+      @owner = owner
     end
+
+    #still thinking about this one :/
+    # def owner
+    # id = Bank::Owner.self(id)
+    #   @owners = Bank::Owner.all
+    #   @owners.each do |a|
+    #   id = @user_id
+    #   @owner = Bank::Owner.new(ssn, l_name, f_name, address, city, state, id)
+    #   return @owner
+    # end
 
 
     def self.all
@@ -43,16 +53,12 @@ module Bank
     end
 
 
-    def add_owner (owner)
-      @account_info = "#{@owner}: #{@user_id}, #{@current_balances}"
-    end
-
     def withdraw(balance)
       if @current_balance - balance < MIN
         puts "We are unable to process this request. Do not allow your account to go negative!"
         return penny_to_dollars(@current_balance)
       end
-      @current_balance = @current_balance  - balance
+      @current_balance = @current_balance - balance
       return penny_to_dollars(@current_balance)
     end
 
