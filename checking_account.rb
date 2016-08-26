@@ -37,5 +37,10 @@ module Bank
         raise ArgumentError.new("You are about to make a poor life decision and must be stopped your balance is still #{penny_to_dollars(@current_balance)} and you have used #{@cheques} checks.")
       end
     end
+
+    def reset_checks
+      @cheques = 0
+      return @cheques
+    end
   end
 end
