@@ -5,16 +5,17 @@ module Bank
   class Account
 
     attr_accessor :initial_balance, :user_id
+    MIN = 0
 
     def initialize(id, balance, date)
       @user_id = id
-      if balance > 0
-        @initial_balance = (balance/100.0)
+      if balance > MIN
+        @current_balance = balance
       else
         raise ArgumentError.new("Your initial balance cannot be less than zero")
       end
       @date_created = date
-      @current_balance = @initial_balance
+
       @account_info = ""
     end
 
@@ -47,17 +48,22 @@ module Bank
     end
 
     def withdraw(balance)
-      if @current_balance - (balance/100.0) < 0
+      if @current_balance - balance < MIN
         puts "We are unable to process this request. Do not allow your account to go negative!"
-        return @current_balance
+        return penny_to_dollars(@current_balance)
       end
-      @current_balance = @current_balance  - (balance/100.0)
-      return @current_balance
+      @current_balance = @current_balance  - balance
+      return penny_to_dollars(@current_balance)
     end
 
     def deposit(balance)
-      @current_balance = @initial_balance + (balance/100.0)
-      return @current_balance
+      @current_balance = @current_balance + balance
+      return penny_to_dollars(@current_balance)
+    end
+
+    def penny_to_dollars (money)
+      money = money/100.0
+      return money
     end
 
   end
