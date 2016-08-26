@@ -4,35 +4,34 @@ require 'csv'
 module Bank
 
   class SavingsAccount < Account
+    MIN = 1000.0
 
     def initialize( id, balance, date)
       super
-      @interest =  1/4
-      if balance > 10
-        @initial_balance = balance
+
+      if balance > MIN
+        @current_balance = balance
       else
         raise ArgumentError.new("You can't let your account drop that low! This isn't limbo!")
       end
+    end
 
       def withdraw (balance)
-        min = 10
-        if (@initial_balance - balance) - 2  > min
-        @current_balance = (@initial_balance - balance) - 2
+        if (@current_balance - balance) - 200.0  > MIN
+        @current_balance = (@current_balance - balance - 200.0)
           return @current_balance
         else
-          @current_balance = @initial_balance
+          @current_balance = @current_balance
           raise ArgumentError.new("You are about to make a poor life decision and must be stopped
-          your balance is still #{@current_balance}")
+          your balance is still #{penny_to_dollars(@current_balance)}")
         end
       end
 
       def add_interest(rate)
         interest_rate = @current_balance * (rate/100.0).to_f
         @current_balance = @current_balance + interest_rate
-        return "Your updated balance is #{@current_balance} and You have earned #{interest_rate} in interest!"
+        return "Your updated balance is #{penny_to_dollars(@current_balance)} and You have earned #{interest_rate} in interest!"
       end
-
-    end
   end
 end
 
